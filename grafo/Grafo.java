@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JFrame;
+
+import org.apache.commons.collections15.Transformer;
+
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.UndirectedSparseGraph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+
 public class Grafo {
 
     private int[][] matrizAdjacencia;
@@ -11,11 +20,25 @@ public class Grafo {
     public Grafo(int[][] matriz) {
         matrizAdjacencia = matriz;
     }
-
+    
+    
+    /**
+     * 
+     * Return the number of vertices of the graph.
+     * 
+     * @return an integer with the number of vertices
+     */
     public int numeroVertices() {
         return matrizAdjacencia.length;
     }
-
+    
+    
+    /**
+     * 
+     * Return the number of edges of the graph.
+     * 
+     * @return an integer with the number of edges.
+     */
     public int numeroArestas() {
         int num = 0;
         for (int i = 0; i < matrizAdjacencia.length; i++) {
@@ -33,6 +56,13 @@ public class Grafo {
         return num;
     }
 
+    
+    /**
+     * 
+     * Get the name (origin -> destination) of all edges og the graph.
+     * 
+     * @return a String with all the edges name.
+     */
     public String nomeArestas() {
 
         String arestas = "";
@@ -46,6 +76,13 @@ public class Grafo {
         return arestas;
     }
 
+    
+    /**
+     * 
+     * Verify the number of loops of the graph.
+     * 
+     * @return an integer with the number of loops of the graph.
+     */
     public int loops() {
         int numLoops = 0;
         for (int i = 0; i < matrizAdjacencia.length; i++) {
@@ -56,6 +93,13 @@ public class Grafo {
         return numLoops;
     }
 
+    
+    /**
+     * 
+     * Return the number of parallel edges of the graph.
+     * 
+     * @return the number of parallel edges.
+     */
     public int numArestasParalelas() {
         int numArestasParalelas = 0;
         for (int i = 0; i < matrizAdjacencia.length; i++) {
@@ -66,11 +110,6 @@ public class Grafo {
             }
         }
         return numArestasParalelas;
-    }
-
-    public boolean isConexo() {
-
-        return true;
     }
 
     public int[] graus() {
@@ -108,40 +147,17 @@ public class Grafo {
         return matriz;
 
     }
-
+    
+    
+    /**
+     * 
+     * Execute the BFS algorithm to the adjacency matrix.
+     * 
+     * @param verticeInicial - The origin.
+     * 
+     * @return a vector with all distances from the origin.
+     */
     public int[] buscaLargura(int verticeInicial) {
-
-        int inicio = 0;
-        int fim = 1;
-
-        int fila[] = new int[numeroVertices()];
-        int distancia[] = new int[numeroVertices()];
-        boolean naFila[] = new boolean[numeroVertices()];
-
-        fila[0] = verticeInicial;
-        distancia[verticeInicial] = 0;
-        naFila[verticeInicial] = true;
-
-        while (inicio != fim) {
-
-            int verticeAnalisado = fila[inicio];
-            inicio++;
-            for (int i = 0; i < matrizAdjacencia[verticeAnalisado].length; i++) {
-                if (matrizAdjacencia[verticeAnalisado][i] != 0 && !naFila[i]) {
-                    fila[fim] = i;
-                    distancia[i] = distancia[verticeAnalisado] + 1;
-                    naFila[i] = true;
-                    fim++;
-                }
-
-            }
-
-        }
-        return distancia;
-
-    }
-
-    public int[] buscaLarguraList(int verticeInicial) {
 
         ArrayList<Integer> fila = new ArrayList<Integer>();
         int distancia[] = new int[numeroVertices()];
@@ -167,37 +183,14 @@ public class Grafo {
 
     }
 
-    public int[] buscaProfundidade2(int verticeInicial) {
-
-        ArrayList<Integer> fila = new ArrayList<Integer>();
-        int distancia[] = new int[numeroVertices()];
-        boolean naFila[] = new boolean[numeroVertices()];
-
-        fila.add(verticeInicial);
-        distancia[verticeInicial] = 0;
-        naFila[verticeInicial] = true;
-
-        while (!fila.isEmpty()) {
-
-            int verticeAnalisado = fila.get(fila.size() - 1);
-            boolean entrou = false;
-            for (int i = 0; i < matrizAdjacencia[verticeAnalisado].length; i++) {
-                if (matrizAdjacencia[verticeAnalisado][i] != 0 && !naFila[i]) {
-                    fila.add(i);
-                    distancia[i] = distancia[verticeAnalisado] + 1;
-                    naFila[i] = true;
-                    entrou = true;
-                    break;
-                }
-            }
-            if (!entrou) {
-                fila.remove(fila.size() - 1);
-            }
-        }
-        return distancia;
-
-    }
-
+    /**
+     * 
+     * Execute the DFS algorithm to the adjacency matrix.
+     * 
+     * @param verticeInicial - The origin.
+     * 
+     * @return a vector with all distances from the origin.
+     */
     public int[] buscaProfundidade(int verticeInicial) {
 
         ArrayList<Integer> pilha = new ArrayList<Integer>();
@@ -230,6 +223,16 @@ public class Grafo {
 
     }
 
+    /**
+     * 
+     * Find a path from the result of BFS or DFS algorithms.
+     * 
+     * @param vInicio - The origin.
+     * @param vFim - The destination.
+     * @param distancia - The vector, result of BFS or DFS.
+     * 
+     * @return a String with the path.
+     */
     public String caminho(int vInicio, int vFim, int[] distancia) {
 
         String caminho = "";
@@ -255,6 +258,14 @@ public class Grafo {
 
     }
 
+    /**
+     * 
+     * Prim's algorithm to find a minimal spanning tree.
+     * 
+     * @param vInicial - The origin.
+     * 
+     * @return a String with the sequence of edges add to the subgraph.
+     */
     public String prim(int vInicio) {
 
         List<Integer> lista = new ArrayList<Integer>();
@@ -289,6 +300,12 @@ public class Grafo {
 
     }
 
+    /**
+     * 
+     * Kruskal's algorithm to find a minimal spanning tree.
+     *  
+     * @return a String with the sequence of edges add to the subgraph.
+     */
     public String kruskal() {
 
         String arvore = " ";
@@ -321,6 +338,12 @@ public class Grafo {
 
     }
 
+    /**
+     * 
+     * Veirfy if a graph has a cycle or not, using the BFS algorithm.
+     *  
+     * @return true if there is a cycle, false otherwise.
+     */
     private boolean verificaCiclo(int[][] matriz, List<Integer> nos, int i, int j) {
 
         if (nos.contains(i) && nos.contains(j)) {
@@ -360,6 +383,12 @@ public class Grafo {
 
     }
     
+    /**
+     * 
+     * Djikistra algorithm to find the best path in a weight graph.
+     *  
+     * @return the vector with all the distances from the origin.
+     */
     public int[] djikistra(int verticeInicial) {
 
         // 1 - tirei a fila, agora verifica no vetor de distâncias.
@@ -407,7 +436,12 @@ public class Grafo {
 
     }
     
-    
+    /**
+     * 
+     * Floyd-Warshall algorithm to find the best path in a weight graph.
+     *  
+     * @return the matrix with all distances.
+     */
     public int [][] floydWarshall() {
         
         // monta a matriz inicial
@@ -439,19 +473,26 @@ public class Grafo {
         
     }
     
-    public void visualizarGrafo(List<String> cidades, int [][] matriz) {
+    
+    /**
+     * 
+     * A simple visualization of the graph, using the JUNG API.
+     * 
+     */
+    public void visualizarGrafo(int [][] matriz) {
+    	
         JFrame jf = new JFrame();
         
         Graph g = new UndirectedSparseGraph();
-        for (int i = 0; i < cidades.size(); i++) {
-            g.addVertex(cidades.get(i));
+        for (int i = 0; i < matriz.length; i++) {
+            g.addVertex(i);
         }
         
         for (int i = 0; i < matriz.length; i++) {
             for (int j = i; j < matriz[i].length; j++) {
                 if (matriz[i][j] != 0) {
-                    String nome = cidades.get(i) + " -> " + cidades.get(j) + " : " + matriz[i][j];
-                    g.addEdge(nome, cidades.get(i), cidades.get(j));
+                    String nome = i + " -> " + j;
+                    g.addEdge(nome, i, j);
                 }
             }
         }
@@ -460,16 +501,17 @@ public class Grafo {
         jf.getContentPane().add(vv);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        vv.getRenderContext().setVertexLabelTransformer(new Transformer<String, String>() {
-            public String transform(String e) {
-                return (e);
-            }
+        vv.getRenderContext().setVertexLabelTransformer(new Transformer<Integer, String>() {
+			@Override
+			public String transform(Integer e) {
+				return String.valueOf(e);
+			}
         });
         
         
         vv.getRenderContext().setEdgeLabelTransformer(new Transformer<String, String>() {
             public String transform(String e) {
-                return (e);
+               return (e);
             }
         });
         
@@ -479,5 +521,4 @@ public class Grafo {
     
     }
     
-
 }
