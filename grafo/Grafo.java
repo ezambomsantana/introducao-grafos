@@ -439,5 +439,45 @@ public class Grafo {
         
     }
     
+    public void visualizarGrafo(List<String> cidades, int [][] matriz) {
+        JFrame jf = new JFrame();
+        
+        Graph g = new UndirectedSparseGraph();
+        for (int i = 0; i < cidades.size(); i++) {
+            g.addVertex(cidades.get(i));
+        }
+        
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = i; j < matriz[i].length; j++) {
+                if (matriz[i][j] != 0) {
+                    String nome = cidades.get(i) + " -> " + cidades.get(j) + " : " + matriz[i][j];
+                    g.addEdge(nome, cidades.get(i), cidades.get(j));
+                }
+            }
+        }
+        
+        VisualizationViewer vv = new VisualizationViewer(new FRLayout(g));
+        jf.getContentPane().add(vv);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        vv.getRenderContext().setVertexLabelTransformer(new Transformer<String, String>() {
+            public String transform(String e) {
+                return (e);
+            }
+        });
+        
+        
+        vv.getRenderContext().setEdgeLabelTransformer(new Transformer<String, String>() {
+            public String transform(String e) {
+                return (e);
+            }
+        });
+        
+        jf.pack();
+        jf.setVisible(true);
+    
+    
+    }
+    
 
 }
