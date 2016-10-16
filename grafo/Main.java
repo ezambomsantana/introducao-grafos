@@ -20,7 +20,7 @@ public class Main {
         
         int [][] matriz;
         
-        FileReader fileReader = new FileReader("/home/eduardo/matriz_djikistra_direcionado");
+        FileReader fileReader = new FileReader("/home/eduardo/matriz");
         BufferedReader reader = new BufferedReader(fileReader);
         
         List<String> linhas = new ArrayList<String>();
@@ -54,7 +54,9 @@ public class Main {
         fileReader.close();
         reader.close();
         
-        Grafo grafo = new Grafo(matriz);
+        Grafo grafo = new Grafo(matriz);        
+
+        grafo.visualizarGrafo(matriz);
         
         System.out.println("Num Vértices: " + grafo.numeroVertices());
         System.out.println("Num arestas: " + grafo.numeroArestas());
@@ -79,7 +81,7 @@ public class Main {
         }
         
         System.out.println("Busca Largura:");
-        int [] distancia = grafo.buscaLarguraList(1);
+        int [] distancia = grafo.buscaLargura(1);
         for (i = 0; i < distancia.length; i++) {
             System.out.println(i + " " + distancia[i]);
         }        
@@ -111,7 +113,7 @@ public class Main {
             }
             System.out.println("");
         }
-        
+                
     }
     
 }
