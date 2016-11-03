@@ -1,6 +1,6 @@
 # GRAPH INTRODUCTION
 
-Graph algorithms. This library is used just to teaching purposes.
+Graph algorithms. This library is used just for teaching purposes.
 
 To visualize the created graphs is necessary to import JUNG library. (http://jung.sourceforge.net/download.html)
 
