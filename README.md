@@ -1,10 +1,24 @@
-# GRAPH INTRODUCTION
+# Introduction to Graph Theory
 
 Graph algorithms. This library is used just for teaching purposes.
 
-To visualize the created graphs is necessary to import JUNG library. (http://jung.sourceforge.net/download.html)
+To visualize the created graphs is necessary to import JUNG library to the project. (http://jung.sourceforge.net/download.html)
 
 ## Implemented Algorithms
+
+### Search
+
+- Depth first search (DFS)
+- Breadth first search (BFS)
+
+### Minimum Path
+
+- Dijikstra
+- Floyd-Warshall
+
+### Minimal Spanning Tree
+- Prim
+- Kruskal
 
 ## Input
 
