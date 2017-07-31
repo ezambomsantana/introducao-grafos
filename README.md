@@ -2,7 +2,7 @@
 
 Graph algorithms. This library is used just for teaching purposes.
 
-To visualize the created graphs is necessary to import JUNG library to the project. (http://jung.sourceforge.net/download.html)
+To visualize the graphs is necessary to import JUNG library to the project. (http://jung.sourceforge.net/download.html)
 
 ## Implemented Algorithms
 
@@ -22,7 +22,7 @@ To visualize the created graphs is necessary to import JUNG library to the proje
 
 ## Input
 
-The input of the program is a adjacency matrix, such as:
+The input of the program is an adjacency matrix, such as:
 
 0 1 1 0 1
 
