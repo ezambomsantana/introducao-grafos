@@ -1,4 +1,4 @@
-package leitura;
+package metro;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +19,8 @@ public class Metro {
 	
 	public static String inputFile = "C:\\Users\\ezamb\\Desktop\\grafos\\metro.xml";
 
+	public static List<String> estacoes = new ArrayList<String>();
+	
 	public static int[][] getMetroMatrix() throws ParserConfigurationException, SAXException, IOException {
 				
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -28,8 +30,6 @@ public class Metro {
 		docMap.getDocumentElement().normalize();
 		NodeList nList = docMap.getElementsByTagName("station");
 		
-		List<String> estacoes = new ArrayList<String>();
-
 		for (int i = 0; i < nList.getLength(); i++) {
 
 			Node nNode = nList.item(i);
@@ -37,9 +37,7 @@ public class Metro {
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 				Element eElement = (Element) nNode;
-
 				String nameStation = eElement.getAttribute("name");
-				
 				estacoes.add(nameStation);
 
 			}
@@ -63,11 +61,13 @@ public class Metro {
 				String nameStation = eElement.getAttribute("nameOrigin");
 				String nameDestination = eElement.getAttribute("nameDestination");
 				
+				String tempo = eElement.getAttribute("tempo");
+				
 				int origem = estacoes.indexOf(nameStation);
 				int destination = estacoes.indexOf(nameDestination);
 				
-				matrix[origem][destination] = 1;
-				matrix[destination][origem] = 1;
+				matrix[origem][destination] = Integer.parseInt(tempo);
+				matrix[destination][origem] = Integer.parseInt(tempo);
 				
 				links.put(origem, destination);
 
@@ -75,10 +75,6 @@ public class Metro {
 
 		}
 		
-		for (int i = 0; i < estacoes.size(); i++) {
-			System.out.print(i + ":");
-			System.out.println(estacoes.get(i));
-		}
 		
 		return matrix;
 
