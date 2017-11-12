@@ -1,0 +1,40 @@
+CREATE (SP:Cidade {nome:'São Paulo', populacao:10000000})
+CREATE (Campinas:Cidade {nome:'Campinas', populacao:1000000})
+CREATE (RJ:Cidade {nome:'Rio de Janeiro', populacao:6000000})
+CREATE (Lins:Cidade {nome:'Lins', populacao:70000})
+CREATE (Bauru:Cidade {nome:'Bauru', populacao:300000})
+CREATE (Santos:Cidade {nome:'Santos', populacao:600000})
+
+
+CREATE
+  (SP)-[:LIGADA_A {estrada:['Bandeirantes']}]->(Campinas),
+  (Campinas)-[:LIGADA_A {estrada:['Bandeirantes']}]->(SP),
+
+  (SP)-[:LIGADA_A {estrada:['Anhanguera']}]->(Campinas),
+  (Campinas)-[:LIGADA_A {estrada:['Anhanguera']}]->(SP),
+
+  (SP)-[:LIGADA_A {estrada:['Imigrantes']}]->(Santos),
+  (Santos)-[:LIGADA_A {estrada:['Imigrantes']}]->(SP),
+
+  (RJ)-[:LIGADA_A {estrada:['Rio Santos']}]->(Santos),
+  (Santos)-[:LIGADA_A {estrada:['Rio Santos']}]->(RJ),
+
+  (SP)-[:LIGADA_A {estrada:['Anhanguera']}]->(Campinas),
+  (Campinas)-[:LIGADA_A {estrada:['Anhanguera']}]->(SP),
+
+  (SP)-[:LIGADA_A {estrada:['Dutra']}]->(RJ),
+  (RJ)-[:LIGADA_A {estrada:['Dutra']}]->(SP),
+
+  (SP)-[:LIGADA_A {estrada:['Castelo Branco']}]->(Bauru),
+  (Bauru)-[:LIGADA_A {estrada:['Castelo Branco']}]->(SP),
+
+  (Campinas)-[:LIGADA_A {estrada:['X']}]->(Bauru),
+  (Bauru)-[:LIGADA_A {estrada:['X']}]->(Campinas),
+
+  (Bauru)-[:LIGADA_A {estrada:['Marechal Rondon']}]->(Lins),
+  (Lins)-[:LIGADA_A {estrada:['Marechal Rondon']}]->(Bauru);
+
+
+
+
+MATCH (n) DETACH DELETE n;
