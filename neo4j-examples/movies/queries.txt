@@ -1,0 +1,29 @@
+% Encontra o ator com nome Tom Hanks
+MATCH (tom {name: "Tom Hanks"}) RETURN tom
+
+% Encontra o filme com titulo Coud Atlas
+MATCH (cloudAtlas {title: "Cloud Atlas"}) RETURN cloudAtlas
+
+% Encontra o nome de todas as pessoas - limitado a 10
+MATCH (people:Person) RETURN people.name LIMIT 10
+
+% Encontra os filmes lançãdos entre 1990 e 2000
+MATCH (nineties:Movie) WHERE nineties.released >= 1990 AND nineties.released < 2000 RETURN nineties.title
+
+% Encontra o ator Tom Hanks e todos os filmes que ele atuou
+MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,tomHanksMovies
+
+% Encontra todos os atores que participaram do filme Cloud Atlas
+MATCH (movie:Movie {title: "Cloud Atlas"})<-[:ACTED_IN]-(actorsMovie) RETURN movie,actorsMovie
+
+% PEssoas qu estão relacionadas ao filme cloud atlas
+MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo
+
+% Pessoas que trabalharam com Tom Hanks
+MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors) RETURN coActors.name
+
+% melhor caminho entre Kevin Bacon e Meg Ryan
+MATCH p=shortestPath(
+  (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+)
+RETURN p
